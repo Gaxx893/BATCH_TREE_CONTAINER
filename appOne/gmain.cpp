@@ -19,14 +19,15 @@
 #include"CONTAINER/BATCH.h"
 void gmain()
 {
-    window(1920, 1080, full);
-    //window(1280, 720);
+    window(1280, 720);
 
     //シェーダに渡すデータを用意
     MATRIX world, view, proj;
     VECTOR lightPos;
     float ambient;
     COLOR diffuse;
+    float angle = 0.0f;
+
 
     //カメラ行列
     VECTOR camPos(0, 0, 3), lookat(0, 0, 0), up(0, 1, 0);
@@ -50,13 +51,15 @@ void gmain()
 
     //３Ｄモデルデータ
     CONTAINER* container = new CONTAINER("assets\\assets.txt");
-    BATCH* batch = container->batch("banana");
+    BATCH* batch = container->batch("elephant");
 
     while (notQuit)
     {
         clear(60, 120, 240);
         //world行列
+        angle += 0.017f;    // ラジアン値の1度
         world.identity();
+        world.mulRotateY(angle);
         //バッチモデルの表示
         batch->draw(shader, world);
     }
